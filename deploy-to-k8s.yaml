@@ -1,0 +1,17 @@
+---
+- name: Deploy app in new namespace
+  tasks:
+    - name: Create a k8s namespace
+      k8s:
+        name: my-app
+        api_version: v1
+        kind: Namespace
+        state: present
+        kubeconfig: ~/Ideaprojects/kubeconfig_myapp-eks-cluster
+    - name: Deploy nginx app
+      k8s:
+        src: ~/Ideaprojects/nginx-config.yaml
+        state: present
+        kubeconfig: ~/Ideaprojects/kubeconfig_myapp-eks-cluster
+        namespace: my-app
+
